@@ -6,9 +6,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/estilos.css">
     <link rel="stylesheet" href="./css/reset.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Bate-papo Uol</title>
 </head>
 <body>
-    <div class="teste">teste Bate-papo Uol</div>
+    <div class="app">
+        <div class="top">
+            <div class="logo"><img class="img-logo" src="./imgs/logo.jpg" alt="logo-batepapouol"></div>
+            <div class="people"><ion-icon name="people"></ion-icon></div>
+        </div>
+        <div class="aba-lateral escondido">
+            <div class="sombreado"></div>
+            <div class="configuracoes">
+                <div class="selecao-destinatario">
+                    <div class="titulo"><span>Escolha um contato</br> para enviar mensagem:</span></div>
+                    <div class="selecoes-destinatario">
+                        <ul>
+                            <li>
+                                <div class="selecionado">
+                                    <ion-icon name="people"></ion-icon>
+                                    <span>Todos</span>
+                                </div>
+                                <div class="selecionado-icone">
+                                    <ion-icon name="checkmark-sharp"></ion-icon>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="selecionado">
+                                    <ion-icon name="person-circle"></ion-icon>
+                                    <span>João</span>
+                                </div>
+                                <div class="selecionado-icone">
+                                    <ion-icon name="checkmark-sharp"></ion-icon>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="selecionado">
+                                    <ion-icon name="person-circle"></ion-icon>
+                                    <span>Maria</span>
+                                </div>
+                                <div class="selecionado-icone">
+                                    <ion-icon name="checkmark-sharp"></ion-icon>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="selecao-visibilidade">
+                    <div class="titulo">Escolha a visibilidade:</div>
+                    <div class="selecoes-visibilidade">
+                        <ul>
+                            <li>
+                                <div class="selecionado">
+                                    <ion-icon name="lock-open"></ion-icon>
+                                    <span>Público</span>
+                                </div>
+                                <div class="selecionado-icone">
+                                    <ion-icon name="checkmark-sharp"></ion-icon>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="selecionado">
+                                    <ion-icon name="lock-closed"></ion-icon>
+                                    <span>Reservadamente</span>
+                                </div>
+                                <div class="selecionado-icone">
+                                    <ion-icon name="checkmark-sharp"></ion-icon>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat">
+            <ul>
+                <li><div><span>(horário)</span><strong>João</strong> entrou na sala...</div></li>
+                <li><div><span>(horário)</span><strong>João</strong> para <strong>Todos</strong>: Bom dia</div></li>
+                <li><div><span>(horário)</span><strong>Maria</strong> para <strong>João</strong>: Oi João :)</div></li>
+                <li><div><span>(horário)</span><strong>João</strong> reservadamente para <strong>Maria</strong>: Oi gatinha quer tc?</div></li>
+                <li><div><span>(horário)</span> <strong>Maria</strong> sai da sala...</div></li>
+            </ul>
+        </div>
+        <div class="footer">
+            <div class="nova-mensagem">
+                <input type="text" placeholder="Escreva aqui...">
+                <div class="escondido"><span>Enviando para Maria (reservadamente)</span></div>
+            </div>
+            <div class="paper-plane"><ion-icon name="paper-plane-outline"></ion-icon></div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 </body>
 </html>

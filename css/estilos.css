@@ -1,6 +1,147 @@
-.teste {
-    background-color: aqua;
-    height: 200px;
-    width: 200px;
-    margin: 0 auto;
+* {
+    box-sizing: border-box;
+}
+
+.app {
+    background-color: #E5E5E5;
+}
+
+.top {
+    height: 80px;
+    width: 100vw;
+    padding: 0 22px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15  );
+}
+
+.img-logo {
+    height: 48px;
+    width: 75px;
+}
+
+.people ion-icon {
+    font-size: 40px;
+}
+
+.chat {
+    height: 510px;
+    background-color: #E5E5E5;
+    padding-top: 106px;
+    padding-bottom: 80px;
+}
+
+.chat li div {
+    height: 40px;
+    margin-top: 4px;
+    border-radius: 3px;
+    background-color:#FFF;
+    display: flex;
+    align-items: center;
+}
+
+.footer {
+    height: 80px;
+    width: 100vw;
+    background-color: #FFF;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 17px;
+}
+
+.nova-mensagem span {
+    display: flex;
+    margin: 5px 0 0 3px;
+}
+
+.nova-mensagem input{
+    width: 100%;
+    border-style: hidden;
+    color: #000;
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: bold;
+}
+.nova-mensagem:focus, .nova-mensagem input:focus {
+    outline: none;
+}
+input::placeholder {
+    color: #000;
+}
+.paper-plane ion-icon {
+    font-size: 26px;
+}
+
+.aba-lateral {
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: flex;
+}
+
+.escondido {
+    display: none;
+}
+
+.sombreado {
+    width: 30vw;
+    height: 100vh;
+    opacity: 0.9;
+    background: rgba(0, 0, 0, 0.6);
+}
+.configuracoes {
+    width: 70vw;
+    height: 100vh;
+    background-color: #FFF;
+}
+.titulo {
+    height: 84px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.selecoes-destinatario li, .selecoes-visibilidade li {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 19px;
+    padding: 9px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.selecionado {
+    display: flex;
+    align-items: center;
+}
+.selecionado-icone {
+    display: none;
+}
+
+.selecoes-destinatario li ion-icon, .selecoes-visibilidade ion-icon {
+    font-size: 20px;
+}
+.selecoes-destinatario li span, .selecoes-visibilidade span {
+    margin-left: 8px;
 }
