@@ -1,8 +1,6 @@
-
 const seletorChat = document.querySelector(".chat ul");
-
 buscarMensagens();
-
+const meuIntervalo = setInterval(buscarMensagens, 3000);
 function buscarMensagens(){
     const promessa = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages");
 
@@ -21,7 +19,6 @@ function processarFalha(falha){
 function exibirMensagens(listaDeMensagens){
     seletorChat.innerHTML = "";
     for(let i = 0; i < listaDeMensagens.length; i++){
-    console.log(listaDeMensagens[i].type);
         if(listaDeMensagens[i].type === "private_message"){
             seletorChat.innerHTML += 
                 `<li>
@@ -33,6 +30,7 @@ function exibirMensagens(listaDeMensagens){
                     </p>
                 </li>`;
             seletorChat.lastChild.style.backgroundColor = "#ffdede";
+            window.scrollTo(0,document.querySelector(".chat").scrollHeight);
         } else if (listaDeMensagens[i].type === "status") {
             seletorChat.innerHTML += 
                 `<li class="status">
@@ -43,6 +41,7 @@ function exibirMensagens(listaDeMensagens){
                     </p>
                 </li>`;
                 seletorChat.lastChild.style.backgroundColor = "#dcdcdc";
+                window.scrollTo(0,document.querySelector(".chat").scrollHeight);
         } else {
             seletorChat.innerHTML += 
             `<li class="message">
@@ -52,7 +51,8 @@ function exibirMensagens(listaDeMensagens){
                     para <span class="to">${listaDeMensagens[i].to}</span>:
                     <span class="text">${listaDeMensagens[i].text}</span>
                 </p>
-            </li>`;   
+            </li>`;  
+            window.scrollTo(0,document.querySelector(".chat").scrollHeight); 
         }
     }
 }
