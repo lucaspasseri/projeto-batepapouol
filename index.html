@@ -14,39 +14,39 @@
     <div class="app">
         <div class="top">
             <div class="logo"><img class="img-logo" src="./imgs/logo.jpg" alt="logo-batepapouol"></div>
-            <div class="people"><ion-icon name="people"></ion-icon></div>
+            <div class="people" onclick="ativarAbaLateral()"><ion-icon name="people"></ion-icon></div>
         </div>
         <div class="aba-lateral escondido">
-            <div class="sombreado"></div>
+            <div class="sombreado" onclick="desativarAbaLateral()"></div>
             <div class="configuracoes">
-                <div class="selecao-destinatario">
+                <div class="selecao-participantes">
                     <div class="titulo"><span>Escolha um contato</br> para enviar mensagem:</span></div>
-                    <div class="selecoes-destinatario">
+                    <div class="selecoes-participantes">
                         <ul>
-                            <li>
+                            <li onclick="selecionarDestinatario(this)">
                                 <div class="selecionado">
                                     <ion-icon name="people"></ion-icon>
                                     <span>Todos</span>
                                 </div>
-                                <div class="selecionado-icone">
+                                <div class="selecionado-icone escondido">
                                     <ion-icon name="checkmark-sharp"></ion-icon>
                                 </div>
                             </li>
-                            <li>
+                            <li onclick="selecionarDestinatario(this)">
                                 <div class="selecionado">
                                     <ion-icon name="person-circle"></ion-icon>
                                     <span>João</span>
                                 </div>
-                                <div class="selecionado-icone">
+                                <div class="selecionado-icone escondido">
                                     <ion-icon name="checkmark-sharp"></ion-icon>
                                 </div>
                             </li>
-                            <li>
-                                <div class="selecionado">
+                            <li onclick="selecionarDestinatario(this)">
+                                <div class="selecionado" onclick="selecionarDestinatario(this)">
                                     <ion-icon name="person-circle"></ion-icon>
                                     <span>Maria</span>
                                 </div>
-                                <div class="selecionado-icone">
+                                <div class="selecionado-icone escondido">
                                     <ion-icon name="checkmark-sharp"></ion-icon>
                                 </div>
                             </li>
@@ -57,21 +57,21 @@
                     <div class="titulo">Escolha a visibilidade:</div>
                     <div class="selecoes-visibilidade">
                         <ul>
-                            <li>
+                            <li onclick="selecionarVisibilidade(this)">
                                 <div class="selecionado">
                                     <ion-icon name="lock-open"></ion-icon>
                                     <span>Público</span>
                                 </div>
-                                <div class="selecionado-icone">
+                                <div class="selecionado-icone escondido">
                                     <ion-icon name="checkmark-sharp"></ion-icon>
                                 </div>
                             </li>
-                            <li>
+                            <li onclick="selecionarVisibilidade(this)">
                                 <div class="selecionado">
                                     <ion-icon name="lock-closed"></ion-icon>
                                     <span>Reservadamente</span>
                                 </div>
-                                <div class="selecionado-icone">
+                                <div class="selecionado-icone escondido">
                                     <ion-icon name="checkmark-sharp"></ion-icon>
                                 </div>
                             </li>
@@ -127,7 +127,7 @@
                 <input type="text" placeholder="Escreva aqui...">
                 <div class="escondido"><span>Enviando para Maria (reservadamente)</span></div>
             </div>
-            <div class="paper-plane"><ion-icon name="paper-plane-outline"></ion-icon></div>
+            <div class="paper-plane" onclick="enviarMensagem()"><ion-icon name="paper-plane-outline"></ion-icon></div>
         </div>
     </div>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>

@@ -1,7 +1,13 @@
-entrarNaSala();
+//entrarNaSala();
 const seletorChat = document.querySelector(".chat ul");
 //buscarMensagens();
 const meuIntervalo = setInterval(buscarMensagens, 3000);
+//buscarParticipantes();
+const meuSegundoIntervalo = setInterval(buscarParticipantes, 5000);
+let superUsuario = null;
+let destinatario = null;
+let visibilidade = null;
+
 
 function entrarNaSala(){
     const usuario = prompt("Qual é o seu nick?");
@@ -15,6 +21,7 @@ function processarRequisicaoEntrarNaSala(resposta){
     conexao = conexao.replace('{name:', '');
     conexao = conexao.replace('}', '');
     manterConexao(conexao);
+    superUsuario = conexao;
 }
 function processarFalhaEntrarNaSala(falha){
     if(falha.response.status === 400){
@@ -37,6 +44,7 @@ function processarRequisicaoEntrarNaSalaNovaTentativa(resposta){
     conexao = conexao.replace('{name:', '');
     conexao = conexao.replace('}', '');
     manterConexao(conexao);
+    superUsuario = conexao;
 }
 function processarFalhaEntrarNaSalaNovaTentativa(falha){
     if(falha.response.status === 400){
@@ -53,7 +61,6 @@ function manterConexao(conexao){
     requisicao.then(processarRequisicaoManterConexao);
     requisicao.catch(processarFalhaManterConexao);
 }
-
 function processarRequisicaoManterConexao(resposta){
     let conexao = resposta.config.data.replace(/"/g,'');
     conexao = conexao.replace('{name:', '');
@@ -77,10 +84,35 @@ function buscarMensagens(){
 function processarResposta(resposta){
     exibirMensagens(resposta.data);
 }
-
 function processarFalha(falha){
     if(falha.response.status === 400){
         console.log("Erro:400-4");
+    }
+}
+
+
+function enviarMensagem(){
+    const seletorNovaMensagem = document.querySelector(".nova-mensagem input");
+    const mensagem = seletorNovaMensagem.value;
+    const dados = {
+        from: superUsuario,
+        to: "Todos",
+        text: mensagem,
+        type: "message"
+    }
+    const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", dados);
+
+    requisicao.then(processarEnviarMensagem);
+    requisicao.catch(processarFalhaEnviarMensagem);
+}
+function processarEnviarMensagem(resposta){
+    buscarMensagens();
+}
+function processarFalhaEnviarMensagem(falha){
+    if(falha.response.status === 400){
+        console.log("Erro:400-Falha ao enviar mensagem");
+    } else {
+        console.log("outro-Falha ao enviar mensagem");
     }
 }
 
@@ -123,4 +155,59 @@ function exibirMensagens(listaDeMensagens){
             window.scrollTo(0,document.querySelector(".chat").scrollHeight); 
         }
     }
+}
+
+function ativarAbaLateral(){
+    const seletorAbaLateral = document.querySelector(".aba-lateral");
+    seletorAbaLateral.classList.remove("escondido");
+}
+function desativarAbaLateral(){
+    const seletorAbaLateral = document.querySelector(".aba-lateral");
+    seletorAbaLateral.classList.add("escondido");
+}
+
+function buscarParticipantes(){
+    const promessa = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants");
+
+    promessa.then(processarParticipantes);
+    promessa.catch(processarFalhaParticipantes);
+}
+function processarParticipantes(resposta){
+    console.log(resposta.data);
+    const seletorUlParticipantes = document.querySelector(".selecoes-participantes ul");
+    seletorUlParticipantes.innerHTML = "";
+    for(let i = 0; i < resposta.data.length; i++){
+        seletorUlParticipantes.innerHTML += `<li onclick="selecionarDestinatario(this)">
+                                                <div class="selecionado">
+                                                    <ion-icon name="person-circle"></ion-icon>
+                                                    <span>${resposta.data[i].name}</span>
+                                                </div>
+                                                <div class="selecionado-icone escondido">
+                                                    <ion-icon name="checkmark-sharp"></ion-icon>
+                                                </div>
+                                            </li>`;
+    }
+}
+function processarFalhaParticipantes(falha){
+    if(falha.response.status === 400){
+        console.log("Erro:400-Falha na busca de participantes");
+    } else {
+        console.log("outro-Falha na busca de participantes");
+    }
+}
+
+function selecionarVisibilidade(elemento){
+    const seletorAllLiVisibilidade = elemento.parentNode.querySelectorAll("li");
+    for(let i = 0; i < seletorAllLiVisibilidade; i++){
+        seletorAllLiVisibilidade[i].querySelector("div:last-of-type").classList.add("escondido");
+    }
+    console.log(elemento);
+    elemento.querySelector("div:last-of-type").classList.toggle("escondido");
+}
+
+function selecionarDestinatario(elemento){
+    const seletorDestinatarioIcone = elemento.parentNode.querySelector("div:last-of-type");
+    console.log(seletorDestinatarioIcone);
+    seletorDestinatarioIcone.classList.toggle("escondido");
+
 }

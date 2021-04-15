@@ -146,7 +146,7 @@ input::placeholder {
     font-style: normal;
 }
 
-.selecoes-destinatario li, .selecoes-visibilidade li {
+.selecoes-participantes li, .selecoes-visibilidade li {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     line-height: 19px;
@@ -161,12 +161,11 @@ input::placeholder {
     align-items: center;
 }
 .selecionado-icone {
-    display: none;
 }
 
-.selecoes-destinatario li ion-icon, .selecoes-visibilidade ion-icon {
+.selecoes-participantes li ion-icon, .selecoes-visibilidade ion-icon {
     font-size: 20px;
 }
-.selecoes-destinatario li span, .selecoes-visibilidade span {
+.selecoes-participantes li span, .selecoes-visibilidade span {
     margin-left: 8px;
 }
