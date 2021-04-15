@@ -30,19 +30,43 @@
 }
 
 .chat {
-    height: 510px;
-    background-color: #E5E5E5;
+    background-color: #f3f3f3;
     padding-top: 106px;
     padding-bottom: 80px;
 }
 
-.chat li div {
-    height: 40px;
+.chat li{
+    height: 42px;
     margin-top: 4px;
     border-radius: 3px;
     background-color:#FFF;
     display: flex;
     align-items: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.chat li p {
+    margin-left: 10px;
+}
+/* .chat li:first-of-type, .chat li:last-of-type {
+    background-color: #dcdcdc;
+}
+.chat li:nth-of-type(4){
+    background-color: #ffdede;
+} */
+.cinza, .status {
+    background-color: red;
+}
+.rosa, .private-message {
+    background-color: #ffdede;
+}
+
+.from, .to {
+    font-weight: bold;
+}
+
+.time {
+    color: #aaaaaa;
 }
 
 .footer {
@@ -62,6 +86,7 @@
 .nova-mensagem span {
     display: flex;
     margin: 5px 0 0 3px;
+    white-space: nowrap;
 }
 
 .nova-mensagem input{
