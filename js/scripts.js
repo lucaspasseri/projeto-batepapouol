@@ -174,7 +174,7 @@ function buscarParticipantes(){
 }
 function processarParticipantes(resposta){
     console.log(resposta.data);
-    const seletorUlParticipantes = document.querySelector(".selecoes-participantes ul");
+    const seletorUlParticipantes = document.querySelector(".participantes ul");
     seletorUlParticipantes.innerHTML = "";
     for(let i = 0; i < resposta.data.length; i++){
         seletorUlParticipantes.innerHTML += `<li onclick="selecionarDestinatario(this)">
@@ -198,16 +198,22 @@ function processarFalhaParticipantes(falha){
 
 function selecionarVisibilidade(elemento){
     const seletorAllLiVisibilidade = elemento.parentNode.querySelectorAll("li");
-    for(let i = 0; i < seletorAllLiVisibilidade; i++){
-        seletorAllLiVisibilidade[i].querySelector("div:last-of-type").classList.add("escondido");
+    const seletorElemento = elemento.querySelector("div:last-of-type");
+    if(seletorElemento.classList.contains("escondido")){
+        for(let i = 0; i < seletorAllLiVisibilidade.length; i++){
+            (seletorAllLiVisibilidade[i].querySelector("div:last-of-type")).classList.add("escondido");
+        }
     }
-    console.log(elemento);
-    elemento.querySelector("div:last-of-type").classList.toggle("escondido");
+    seletorElemento.classList.toggle("escondido");
 }
 
 function selecionarDestinatario(elemento){
-    const seletorDestinatarioIcone = elemento.parentNode.querySelector("div:last-of-type");
-    console.log(seletorDestinatarioIcone);
-    seletorDestinatarioIcone.classList.toggle("escondido");
-
+    const seletorAllLiParticipantes = elemento.parentNode.querySelectorAll("li");
+    const seletorElemento = elemento.querySelector("div:last-of-type");
+    if(seletorElemento.classList.contains("escondido")){
+        for(let i = 0; i < seletorAllLiParticipantes.length; i++){
+            (seletorAllLiParticipantes[i].querySelector("div:last-of-type")).classList.add("escondido");
+        }
+    }
+    seletorElemento.classList.toggle("escondido");
 }

@@ -47,19 +47,15 @@
 
 .chat li p {
     margin-left: 10px;
+    word-break: break-all;
 }
-/* .chat li:first-of-type, .chat li:last-of-type {
+/* Layout estático
+.chat li:first-of-type, .chat li:last-of-type {
     background-color: #dcdcdc;
 }
 .chat li:nth-of-type(4){
     background-color: #ffdede;
 } */
-.cinza, .status {
-    background-color: red;
-}
-.rosa, .private-message {
-    background-color: #ffdede;
-}
 
 .from, .to {
     font-weight: bold;
@@ -146,7 +142,7 @@ input::placeholder {
     font-style: normal;
 }
 
-.selecoes-participantes li, .selecoes-visibilidade li {
+.selecao-participantes li, .selecao-visibilidade li {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     line-height: 19px;
@@ -160,12 +156,16 @@ input::placeholder {
     display: flex;
     align-items: center;
 }
-.selecionado-icone {
+.selecao-participantes ul {
+    background-color: red;
+    height: 40vh;
+    overflow-y: scroll;
+    word-break: break-all;
 }
 
-.selecoes-participantes li ion-icon, .selecoes-visibilidade ion-icon {
+.selecao-participantes li ion-icon, .selecao-visibilidade ion-icon {
     font-size: 20px;
 }
-.selecoes-participantes li span, .selecoes-visibilidade span {
+.selecao-participantes li span, .selecao-visibilidade span {
     margin-left: 8px;
 }
