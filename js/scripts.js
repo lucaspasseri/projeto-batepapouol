@@ -1,4 +1,4 @@
-//entrarNaSala();
+entrarNaSala();
 const seletorChat = document.querySelector(".chat ul");
 //buscarMensagens();
 const meuIntervalo = setInterval(buscarMensagens, 3000);
@@ -86,7 +86,10 @@ function processarResposta(resposta){
 }
 function processarFalha(falha){
     if(falha.response.status === 400){
-        console.log("Erro:400-4");
+        console.log("Erro:400-Falha ao buscar mensagens");
+    }
+    else {
+        console.log("outro-Falha ao buscar mensagens");
     }
 }
 
@@ -94,11 +97,26 @@ function processarFalha(falha){
 function enviarMensagem(){
     const seletorNovaMensagem = document.querySelector(".nova-mensagem input");
     const mensagem = seletorNovaMensagem.value;
+    
+
+    if(superUsuario === null){
+        superUsuario = "Eu";
+    }
+
+    if(destinatario === null){
+        destinatario = "Todos";
+    }
+    if(visibilidade === null){
+        visibilidade = "message";
+    }
+    
+    console.log(superUsuario, destinatario);
+    console.log(mensagem);
     const dados = {
         from: superUsuario,
-        to: "Todos",
+        to: destinatario,
         text: mensagem,
-        type: "message"
+        type: visibilidade
     }
     const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", dados);
 
@@ -111,6 +129,7 @@ function processarEnviarMensagem(resposta){
 function processarFalhaEnviarMensagem(falha){
     if(falha.response.status === 400){
         console.log("Erro:400-Falha ao enviar mensagem");
+        window.location.reload();
     } else {
         console.log("outro-Falha ao enviar mensagem");
     }
@@ -130,7 +149,7 @@ function exibirMensagens(listaDeMensagens){
                     </p>
                 </li>`;
             seletorChat.lastChild.style.backgroundColor = "#ffdede";
-            window.scrollTo(0,document.querySelector(".chat").scrollHeight);
+            //window.scrollTo(0,document.querySelector(".chat").scrollHeight);
         } else if (listaDeMensagens[i].type === "status") {
             seletorChat.innerHTML += 
                 `<li class="status">
@@ -141,7 +160,7 @@ function exibirMensagens(listaDeMensagens){
                     </p>
                 </li>`;
                 seletorChat.lastChild.style.backgroundColor = "#dcdcdc";
-                window.scrollTo(0,document.querySelector(".chat").scrollHeight);
+                //window.scrollTo(0,document.querySelector(".chat").scrollHeight);
         } else {
             seletorChat.innerHTML += 
             `<li class="message">
@@ -152,7 +171,7 @@ function exibirMensagens(listaDeMensagens){
                     <span class="text">${listaDeMensagens[i].text}</span>
                 </p>
             </li>`;  
-            window.scrollTo(0,document.querySelector(".chat").scrollHeight); 
+            //window.scrollTo(0,document.querySelector(".chat").scrollHeight); 
         }
     }
 }
@@ -174,18 +193,35 @@ function buscarParticipantes(){
 }
 function processarParticipantes(resposta){
     console.log(resposta.data);
-    const seletorUlParticipantes = document.querySelector(".participantes ul");
-    seletorUlParticipantes.innerHTML = "";
-    for(let i = 0; i < resposta.data.length; i++){
-        seletorUlParticipantes.innerHTML += `<li onclick="selecionarDestinatario(this)">
-                                                <div class="selecionado">
-                                                    <ion-icon name="person-circle"></ion-icon>
-                                                    <span>${resposta.data[i].name}</span>
-                                                </div>
-                                                <div class="selecionado-icone escondido">
-                                                    <ion-icon name="checkmark-sharp"></ion-icon>
-                                                </div>
-                                            </li>`;
+    const seletorSelecaoParticipantes = document.querySelector(".selecao-participantes ul");
+    console.log(seletorSelecaoParticipantes);
+    let nomeParticipante = destinatario;
+
+    if(nomeParticipante !== null){
+        seletorTodosParticipantes = seletorSelecaoParticipantes.querySelectorAll("li");
+        console.log(seletorTodosParticipantes);
+        console.log(nomeParticipante);
+    } else {
+        seletorSelecaoParticipantes.innerHTML = `<li onclick="selecionarDestinatario(this)">
+                                                    <div class="selecionado">
+                                                        <ion-icon name="person-circle"></ion-icon>
+                                                        <span>Todos</span>
+                                                    </div>
+                                                    <div class="selecionado-icone">
+                                                        <ion-icon name="checkmark-sharp"></ion-icon>
+                                                    </div>
+                                                </li>`;
+        for(let i = 0; i < resposta.data.length; i++){
+            seletorSelecaoParticipantes.innerHTML += `<li onclick="selecionarDestinatario(this)">
+                                                        <div class="selecionado">
+                                                            <ion-icon name="person-circle"></ion-icon>
+                                                            <span>${resposta.data[i].name}</span>
+                                                        </div>
+                                                        <div class="selecionado-icone escondido">
+                                                            <ion-icon name="checkmark-sharp"></ion-icon>
+                                                        </div>
+                                                    </li>`;
+        }                                            
     }
 }
 function processarFalhaParticipantes(falha){
@@ -204,7 +240,13 @@ function selecionarVisibilidade(elemento){
             (seletorAllLiVisibilidade[i].querySelector("div:last-of-type")).classList.add("escondido");
         }
     }
-    seletorElemento.classList.toggle("escondido");
+    seletorElemento.classList.remove("escondido");
+    console.log(elemento);
+    if(elemento.querySelector(".selecionado").classList.contains("reservado")){
+        visibilidade = "private_message";
+    }else {
+        visibilidade = "message";
+    }
 }
 
 function selecionarDestinatario(elemento){
@@ -216,4 +258,6 @@ function selecionarDestinatario(elemento){
         }
     }
     seletorElemento.classList.toggle("escondido");
+    destinatario = elemento.querySelector(".selecionado span").innerHTML;
+    //ADICIONAR O NOME DO DESTINATARIO EMBAIXO DO INPUT
 }
