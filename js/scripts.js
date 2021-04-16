@@ -1,13 +1,14 @@
 entrarNaSala();
-const seletorChat = document.querySelector(".chat ul");
-//buscarMensagens();
+buscarMensagens();
+buscarParticipantes();
+
+
 const meuIntervalo = setInterval(buscarMensagens, 3000);
-//buscarParticipantes();
-const meuSegundoIntervalo = setInterval(buscarParticipantes, 5000);
+const meuSegundoIntervalo = setInterval(buscarParticipantes, 10000);
+
 let superUsuario = null;
 let destinatario = null;
 let visibilidade = null;
-
 
 function entrarNaSala(){
     const usuario = prompt("Qual é o seu nick?");
@@ -93,7 +94,6 @@ function processarFalha(falha){
     }
 }
 
-
 function enviarMensagem(){
     const seletorNovaMensagem = document.querySelector(".nova-mensagem input");
     const mensagem = seletorNovaMensagem.value;
@@ -110,8 +110,6 @@ function enviarMensagem(){
         visibilidade = "message";
     }
     
-    console.log(superUsuario, destinatario);
-    console.log(mensagem);
     const dados = {
         from: superUsuario,
         to: destinatario,
@@ -122,6 +120,7 @@ function enviarMensagem(){
 
     requisicao.then(processarEnviarMensagem);
     requisicao.catch(processarFalhaEnviarMensagem);
+    seletorNovaMensagem.value = "";
 }
 function processarEnviarMensagem(resposta){
     buscarMensagens();
@@ -136,6 +135,7 @@ function processarFalhaEnviarMensagem(falha){
 }
 
 function exibirMensagens(listaDeMensagens){
+    const seletorChat = document.querySelector(".chat ul");
     seletorChat.innerHTML = "";
     for(let i = 0; i < listaDeMensagens.length; i++){
         if(listaDeMensagens[i].type === "private_message"){
@@ -149,7 +149,6 @@ function exibirMensagens(listaDeMensagens){
                     </p>
                 </li>`;
             seletorChat.lastChild.style.backgroundColor = "#ffdede";
-            //window.scrollTo(0,document.querySelector(".chat").scrollHeight);
         } else if (listaDeMensagens[i].type === "status") {
             seletorChat.innerHTML += 
                 `<li class="status">
@@ -160,7 +159,6 @@ function exibirMensagens(listaDeMensagens){
                     </p>
                 </li>`;
                 seletorChat.lastChild.style.backgroundColor = "#dcdcdc";
-                //window.scrollTo(0,document.querySelector(".chat").scrollHeight);
         } else {
             seletorChat.innerHTML += 
             `<li class="message">
@@ -171,8 +169,8 @@ function exibirMensagens(listaDeMensagens){
                     <span class="text">${listaDeMensagens[i].text}</span>
                 </p>
             </li>`;  
-            //window.scrollTo(0,document.querySelector(".chat").scrollHeight); 
         }
+        window.scrollTo(0,document.querySelector(".chat").scrollHeight);
     }
 }
 
@@ -192,16 +190,20 @@ function buscarParticipantes(){
     promessa.catch(processarFalhaParticipantes);
 }
 function processarParticipantes(resposta){
-    console.log(resposta.data);
-    const seletorSelecaoParticipantes = document.querySelector(".selecao-participantes ul");
-    console.log(seletorSelecaoParticipantes);
-    let nomeParticipante = destinatario;
-
-    if(nomeParticipante !== null){
-        seletorTodosParticipantes = seletorSelecaoParticipantes.querySelectorAll("li");
-        console.log(seletorTodosParticipantes);
-        console.log(nomeParticipante);
+    exibirParticipantes(resposta.data);
+}
+function processarFalhaParticipantes(falha){
+    if(falha.response.status === 400){
+        console.log("Erro:400-Falha na busca de participantes");
     } else {
+        console.log("outro-Falha na busca de participantes");
+    }
+}
+
+function exibirParticipantes(resposta){
+    const seletorSelecaoParticipantes = document.querySelector(".selecao-participantes ul");
+    let nomeParticipante = destinatario;
+    if(nomeParticipante === null){
         seletorSelecaoParticipantes.innerHTML = `<li onclick="selecionarDestinatario(this)">
                                                     <div class="selecionado">
                                                         <ion-icon name="person-circle"></ion-icon>
@@ -211,11 +213,11 @@ function processarParticipantes(resposta){
                                                         <ion-icon name="checkmark-sharp"></ion-icon>
                                                     </div>
                                                 </li>`;
-        for(let i = 0; i < resposta.data.length; i++){
+        for(let i = 0; i < resposta.length; i++){
             seletorSelecaoParticipantes.innerHTML += `<li onclick="selecionarDestinatario(this)">
                                                         <div class="selecionado">
                                                             <ion-icon name="person-circle"></ion-icon>
-                                                            <span>${resposta.data[i].name}</span>
+                                                            <span>${resposta[i].name}</span>
                                                         </div>
                                                         <div class="selecionado-icone escondido">
                                                             <ion-icon name="checkmark-sharp"></ion-icon>
@@ -224,13 +226,7 @@ function processarParticipantes(resposta){
         }                                            
     }
 }
-function processarFalhaParticipantes(falha){
-    if(falha.response.status === 400){
-        console.log("Erro:400-Falha na busca de participantes");
-    } else {
-        console.log("outro-Falha na busca de participantes");
-    }
-}
+
 
 function selecionarVisibilidade(elemento){
     const seletorAllLiVisibilidade = elemento.parentNode.querySelectorAll("li");
@@ -241,12 +237,23 @@ function selecionarVisibilidade(elemento){
         }
     }
     seletorElemento.classList.remove("escondido");
-    console.log(elemento);
+
+    const seletorDestinatario = document.querySelector(".destinatario span");
+    seletorDestinatario.innerHTML = "";
+    let innerHTMLDestinatario = seletorDestinatario.innerHTML;
+    console.log(seletorDestinatario);
     if(elemento.querySelector(".selecionado").classList.contains("reservado")){
         visibilidade = "private_message";
-    }else {
+        innerHTMLDestinatario = `Enviando para ${destinatario} (reservadamente)`;
+        seletorDestinatario.innerHTML = innerHTMLDestinatario;
+
+    }else if (elemento.querySelector(".selecionado").classList.contains("publico")){
         visibilidade = "message";
+        innerHTMLDestinatario = `Enviando para ${destinatario}`;
+        seletorDestinatario.innerHTML = innerHTMLDestinatario;
+
     }
+
 }
 
 function selecionarDestinatario(elemento){
@@ -257,7 +264,23 @@ function selecionarDestinatario(elemento){
             (seletorAllLiParticipantes[i].querySelector("div:last-of-type")).classList.add("escondido");
         }
     }
-    seletorElemento.classList.toggle("escondido");
+    seletorElemento.classList.remove("escondido");
     destinatario = elemento.querySelector(".selecionado span").innerHTML;
-    //ADICIONAR O NOME DO DESTINATARIO EMBAIXO DO INPUT
+
+    if(visibilidade === null){
+        visibilidade = "message";
+    }
+    const seletorDestinatario = document.querySelector(".destinatario");
+    if(destinatario !== "Todos"){
+        seletorDestinatario.classList.remove("escondido");
+        if(visibilidade === "private_message"){
+            seletorDestinatario.querySelector("span").innerHTML = `Enviando para ${destinatario} (reservadamente)`;
+        } else {
+            seletorDestinatario.querySelector("span").innerHTML = `Enviando para ${destinatario}`;
+        }
+
+    } else {
+        seletorDestinatario.classList.add("escondido");
+    }
 }
+

@@ -11,9 +11,16 @@
     <title>Bate-papo Uol</title>
 </head>
 <body>
+    <div class="bem-vindo escondido">
+        <div class="logo-bem-vindo"><img src="./imgs/logo.png" alt="logo-batepapouol"></div>
+        <div class="entrada-nome"><input type="text" placeholder="Digite seu nome"></div>
+        <div class="botao"><button onclick="entrarNaSalaBonus()">Entrar</button></div>
+        <div class="carregando escondido"><img src="./imgs/loading.gif" alt="carregando-gif"></div>
+        <div class="mensagem-carregando escondido">Entrando</div>
+    </div>
     <div class="app">
         <div class="top">
-            <div class="logo"><img class="img-logo" src="./imgs/logo.jpg" alt="logo-batepapouol"></div>
+            <div class="logo"><img class="img-logo" src="./imgs/logo.png" alt="logo-batepapouol"></div>
             <div class="people" onclick="ativarAbaLateral()"><ion-icon name="people"></ion-icon></div>
         </div>
         <div class="aba-lateral escondido">
@@ -55,7 +62,7 @@
                 </div>
                 <div class="visibilidade">
                     <div class="titulo">Escolha a visibilidade:</div>
-                    <div class="selecao=visibilidade">
+                    <div class="selecao-visibilidade">
                         <ul>
                             <li onclick="selecionarVisibilidade(this)">
                                 <div class="selecionado publico">
@@ -125,7 +132,7 @@
         <div class="footer">
             <div class="nova-mensagem">
                 <input type="text" placeholder="Escreva aqui...">
-                <div class="escondido"><span>Enviando para Maria (reservadamente)</span></div>
+                <div class="destinatario escondido"><span>Enviando para Maria (reservadamente)</span></div>
             </div>
             <div class="paper-plane" onclick="enviarMensagem()"><ion-icon name="paper-plane-outline"></ion-icon></div>
         </div>

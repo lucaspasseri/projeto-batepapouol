@@ -115,10 +115,6 @@ input::placeholder {
     display: flex;
 }
 
-.escondido {
-    display: none;
-}
-
 .sombreado {
     width: 30vw;
     height: 100vh;
@@ -150,6 +146,7 @@ input::placeholder {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 40px;
 }
 
 .selecionado {
@@ -157,7 +154,6 @@ input::placeholder {
     align-items: center;
 }
 .selecao-participantes ul {
-    background-color: red;
     height: 40vh;
     overflow-y: scroll;
     word-break: break-all;
@@ -168,4 +164,36 @@ input::placeholder {
 }
 .selecao-participantes li span, .selecao-visibilidade span {
     margin-left: 8px;
+}
+
+.bem-vindo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 72px;
+}
+.logo-bem-vindo img {
+    height: 92px;
+    width: 130px;
+}
+
+.entrada-nome {
+    margin-top: 94px;
+}
+.entrada-nome input{
+    text-align: center;
+    height: 64px;
+    width: 261px;
+}
+
+button {
+    margin-top: 15px;
+    height: 45px;
+    width: 109px;
+    border: none;
+    border-radius: 9px;
+}
+.escondido {
+    display: none;
 }
